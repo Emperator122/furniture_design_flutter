@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-        textTheme: GoogleFonts.nunitoSansTextTheme()
+        textTheme: GoogleFonts.nunitoSansTextTheme(),
       ),
       home: const BoardingPage(),
     );

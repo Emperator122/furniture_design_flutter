@@ -15,6 +15,9 @@ class RegistrationStrings {
 
   static const loginTitle = 'Hello !';
   static const loginSubtitle = 'WELCOME BACK';
+  static const loginForgotPassword = 'Forgot Password';
+  static const signIn = 'SIGN IN';
+  static const signUp = 'SIGN UP';
 
   RegistrationStrings._();
 }
@@ -23,6 +26,8 @@ class RegistrationSizes {
   static const boardingButtonWidth = 159.0;
   static const boardingButtonHeight = 54.0;
   static const authMainPadding = 30.0;
+  static const authFormMargin = 15.0;
+  static const authSignInButtonHeight= 50.0;
 
   RegistrationSizes._();
 }

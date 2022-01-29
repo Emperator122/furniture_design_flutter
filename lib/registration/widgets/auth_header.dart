@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+const double _linesMargin = 20.0;
+
 class AuthHeader extends StatelessWidget {
   const AuthHeader({Key? key}) : super(key: key);
 
@@ -10,26 +12,24 @@ class AuthHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Flexible(
-          flex: 4,
-          child: _getDivider(),
-        ),
-        Flexible(
-          flex: 3,
-          child: SvgPicture.asset(
-            'assets/registration/header_icon.svg',
+        _getDivider(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: _linesMargin),
+          child: SizedBox(
+            child: SvgPicture.asset(
+              'assets/registration/header_icon.svg',
+            ),
           ),
         ),
-        Flexible(
-          flex: 4,
-          child: _getDivider(),
-        ),
+        _getDivider(),
       ],
     );
   }
 
-  Widget _getDivider() => Container(
-        color: const Color(0xFFBDBDBD),
-        height: 1,
-      );
+  Widget _getDivider() => Expanded(
+    child: Container(
+          color: const Color(0xFFBDBDBD),
+          height: 1,
+        ),
+  );
 }

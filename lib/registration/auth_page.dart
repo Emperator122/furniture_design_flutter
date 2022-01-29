@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture/registration/resources.dart';
 import 'package:furniture/registration/widgets/auth_header.dart';
+import 'package:furniture/ui/regular_button.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class AuthPageVM {
@@ -46,14 +47,14 @@ class AuthPageState extends State<AuthPage> {
       resizeToAvoidBottomInset: false,
       body: Padding(
         padding:
-            const EdgeInsets.only(right: RegistrationSizes.authMainPadding),
+        const EdgeInsets.only(right: RegistrationSizes.authMainPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SafeArea(
               child: Padding(
                 padding:
-                    EdgeInsets.only(left: RegistrationSizes.authMainPadding),
+                EdgeInsets.only(left: RegistrationSizes.authMainPadding),
                 child: AuthHeader(),
               ),
             ),
@@ -80,7 +81,7 @@ class AuthPageState extends State<AuthPage> {
             fontFamily: MyTextFontFamily.merriweather,
           ),
           const SizedBox(
-            height: RegistrationSizes.authMainPadding / 2,
+            height: RegistrationSizes.authFormMargin,
           ),
           MyText.h2(
             RegistrationStrings.loginSubtitle,
@@ -94,61 +95,121 @@ class AuthPageState extends State<AuthPage> {
   }
 
   Widget _buildAuthForm() {
-    TextField _getTextField(TextEditingController controller) => TextField(
-          controller: _vm.emailController,
-          decoration: const InputDecoration(
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: RegistrationColors.authFieldsUnderline,
-                width: 2.0,
-              ),
-            ),
-          ),
+    SizedBox _margin() =>
+        const SizedBox(
+          height: RegistrationSizes.authFormMargin,
         );
 
-    return Expanded(
+    return Container(
+      decoration: const BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: RegistrationColors.shadowColor,
+            blurRadius: 30.0,
+            spreadRadius: 0.0,
+            offset: Offset(0.0, 7.0), // shadow direction: bottom right
+          ),
+        ],
+        color: Colors.white,
+      ),
       child: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.height / 15,
+        padding: const EdgeInsets.only(
+          left: RegistrationSizes.authMainPadding,
+          top: RegistrationSizes.authMainPadding,
+          bottom: RegistrationSizes.authMainPadding,
         ),
-        child: Container(
-          decoration: const BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: RegistrationColors.shadowColor,
-                blurRadius: 30.0,
-                spreadRadius: 0.0,
-                offset: Offset(0.0, 7.0), // shadow direction: bottom right
-              ),
-            ],
-            color: Colors.white,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: RegistrationSizes.authMainPadding,
-              top: RegistrationSizes.authMainPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            MyText.h5(
+              'Email',
+              color: RegistrationColors.textGray,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                MyText.h5(
-                  'Email',
-                  color: RegistrationColors.textGray,
-                ),
-                _getTextField(_vm.emailController),
-                const SizedBox(
-                  height: RegistrationSizes.authMainPadding / 2,
-                ),
-                MyText.h5(
-                  'Password',
-                  color: RegistrationColors.textGray,
-                ),
-                _getTextField(_vm.passwordController),
-              ],
+            _emailField(),
+            _margin(),
+            MyText.h5(
+              'Password',
+              color: RegistrationColors.textGray,
             ),
-          ),
+            _passwordField(),
+            _margin(),
+            _forgotPasswordButton(),
+            _margin(),
+            _signInButton(),
+            _margin(),
+            _signUpButton(),
+          ],
         ),
       ),
     );
   }
+
+  Widget _emailField() =>
+      TextField(
+        controller: _vm.emailController,
+        decoration: const InputDecoration(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: RegistrationColors.authFieldsUnderline,
+              width: 2.0,
+            ),
+          ),
+        ),
+      );
+
+  Widget _passwordField() =>
+      TextField(
+        controller: _vm.passwordController,
+        decoration: const InputDecoration(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: RegistrationColors.authFieldsUnderline,
+              width: 2.0,
+            ),
+          ),
+        ),
+      );
+
+  Widget _forgotPasswordButton() =>
+      Center(
+        child: TextButton(
+          onPressed: () {
+            return;
+          },
+          child: MyText.h3(
+            RegistrationStrings.loginForgotPassword,
+            color: RegistrationColors.black,
+            customStyle: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
+      );
+
+  Widget _signInButton() =>
+      Padding(
+        padding: const EdgeInsets.only(right: RegistrationSizes.authMainPadding),
+        child: SizedBox(
+          height: RegistrationSizes.authSignInButtonHeight,
+          child: RegularButton(
+            onPressed: () {
+              return;
+            },
+            text: RegistrationStrings.signIn,
+            elevation: 10,
+          ),
+        ),
+      );
+
+  Widget _signUpButton() =>
+      Center(
+        child: TextButton(
+          onPressed: () {
+            return;
+          },
+          child: MyText.h3(
+            RegistrationStrings.signUp,
+            color: RegistrationColors.black,
+            customStyle: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
+      );
 }
