@@ -18,6 +18,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: const Color(0xFFFFFFFF),
         textTheme: GoogleFonts.nunitoSansTextTheme(),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              primary: const Color(0xFF212121),
+            )
+        ),
       ),
       home: const BoardingPage(),
     );

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/registration/auth_page.dart';
 import 'package:furniture/registration/resources.dart';
-import 'package:furniture/ui/regular_button.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class BoardingPage extends StatefulWidget {
@@ -16,6 +15,7 @@ class _BoardingPageState extends State<BoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           _buildBackground(),
@@ -73,10 +73,14 @@ class _BoardingPageState extends State<BoardingPage> {
           SafeArea(
             bottom: true,
             child: Center(
-              child: RegularButton(
-                width: RegistrationSizes.boardingButtonWidth,
-                height: RegistrationSizes.boardingButtonHeight,
-                text: RegistrationStrings.boardingButtonText,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 10,
+                  fixedSize: const Size(
+                    RegistrationSizes.boardingButtonWidth,
+                    RegistrationSizes.boardingButtonHeight,
+                  ),
+                ),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -84,6 +88,10 @@ class _BoardingPageState extends State<BoardingPage> {
                     ),
                   );
                 },
+                child: MyText.h3(
+                  RegistrationStrings.boardingButtonText,
+                  fontFamily: MyTextFontFamily.gelasio,
+                ),
               ),
             ),
           ),

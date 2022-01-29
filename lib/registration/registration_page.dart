@@ -1,49 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:furniture/misc/value_cubit.dart';
-import 'package:furniture/registration/registration_page.dart';
 import 'package:furniture/registration/resources.dart';
 import 'package:furniture/registration/widgets/auth_header.dart';
 import 'package:furniture/ui/text_style.dart';
 
-class AuthPageVM {
+class RegistrationPageVM {
+  final TextEditingController nameController;
   final TextEditingController emailController;
   final TextEditingController passwordController;
+  final TextEditingController confirmPasswordController;
   final ValueCubit<bool> passwordVisibleController;
+  final ValueCubit<bool> confirmPasswordVisibleController;
 
-  AuthPageVM()
-      : emailController = TextEditingController(),
+  RegistrationPageVM()
+      : nameController = TextEditingController(),
+        emailController = TextEditingController(),
         passwordController = TextEditingController(),
-        passwordVisibleController = ValueCubit(true);
+        confirmPasswordController = TextEditingController(),
+        passwordVisibleController = ValueCubit(true),
+        confirmPasswordVisibleController = ValueCubit(true);
 
   void close() {
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    confirmPasswordController.dispose();
     passwordVisibleController.close();
+    confirmPasswordVisibleController.close();
   }
 }
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return AuthPageState();
+    return RegistrationPageState();
   }
 }
 
-class AuthPageState extends State<AuthPage> {
-  late final AuthPageVM _vm;
+class RegistrationPageState extends State<RegistrationPage> {
+  late final RegistrationPageVM _vm;
 
   @override
   void initState() {
-    _vm = AuthPageVM();
+    _vm = RegistrationPageVM();
     super.initState();
   }
 
   @override
   void dispose() {
-    super.dispose();
     _vm.close();
+    super.dispose();
   }
 
   @override
@@ -52,8 +60,9 @@ class AuthPageState extends State<AuthPage> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding:
-              const EdgeInsets.only(right: RegistrationSizes.authMainPadding, bottom: RegistrationSizes.authMainPadding,),
+          padding: const EdgeInsets.only(
+              right: RegistrationSizes.authMainPadding,
+              bottom: RegistrationSizes.authMainPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -66,7 +75,7 @@ class AuthPageState extends State<AuthPage> {
               ),
               _buildTitle(),
               const SizedBox(
-                height: RegistrationSizes.authMainPadding,
+                height: RegistrationSizes.registerTitleMargin,
               ),
               _buildAuthForm(),
             ],
@@ -79,24 +88,11 @@ class AuthPageState extends State<AuthPage> {
   Widget _buildTitle() {
     return Padding(
       padding: const EdgeInsets.only(left: RegistrationSizes.authMainPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          MyText.h1(
-            RegistrationStrings.loginTitle,
-            color: RegistrationColors.textGray,
-            fontFamily: MyTextFontFamily.merriweather,
-          ),
-          const SizedBox(
-            height: RegistrationSizes.authFormMargin,
-          ),
-          MyText.h2(
-            RegistrationStrings.loginSubtitle,
-            color: RegistrationColors.black,
-            fontFamily: MyTextFontFamily.merriweather,
-            customStyle: const TextStyle(fontWeight: FontWeight.w700),
-          ),
-        ],
+      child: MyText.h2(
+        RegistrationStrings.registrationTitle,
+        color: RegistrationColors.black,
+        fontFamily: MyTextFontFamily.merriweather,
+        customStyle: const TextStyle(fontWeight: FontWeight.w700),
       ),
     );
   }
@@ -128,6 +124,12 @@ class AuthPageState extends State<AuthPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             MyText.h5(
+              'Name',
+              color: RegistrationColors.textGray,
+            ),
+            _nameField(),
+            _margin(),
+            MyText.h5(
               'Email',
               color: RegistrationColors.textGray,
             ),
@@ -137,18 +139,40 @@ class AuthPageState extends State<AuthPage> {
               'Password',
               color: RegistrationColors.textGray,
             ),
-            _passwordField(),
+            _passwordField(
+              _vm.passwordVisibleController,
+              _vm.passwordController,
+            ),
             _margin(),
-            _forgotPasswordButton(),
-            _margin(),
-            _signInButton(),
+            MyText.h5(
+              'Confirm Password',
+              color: RegistrationColors.textGray,
+            ),
+            _passwordField(
+              _vm.confirmPasswordVisibleController,
+              _vm.confirmPasswordController,
+            ),
             _margin(),
             _signUpButton(),
+            _margin(),
+            _signInText(),
           ],
         ),
       ),
     );
   }
+
+  Widget _nameField() => TextField(
+        controller: _vm.nameController,
+        decoration: const InputDecoration(
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: RegistrationColors.authFieldsUnderline,
+              width: 2.0,
+            ),
+          ),
+        ),
+      );
 
   Widget _emailField() => TextField(
         controller: _vm.emailController,
@@ -162,13 +186,14 @@ class AuthPageState extends State<AuthPage> {
         ),
       );
 
-  Widget _passwordField() {
+  Widget _passwordField(ValueCubit<bool> passwordVisibleController,
+      TextEditingController controller) {
     return StreamBuilder<bool>(
-        stream: _vm.passwordVisibleController.stream,
+        stream: passwordVisibleController.stream,
         builder: (context, snapshot) {
           return TextField(
-            controller: _vm.passwordController,
-            obscureText: !_vm.passwordVisibleController.state,
+            controller: controller,
+            obscureText: !passwordVisibleController.state,
             decoration: InputDecoration(
               enabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(
@@ -178,36 +203,22 @@ class AuthPageState extends State<AuthPage> {
               ),
               suffixIcon: IconButton(
                 icon: Icon(
-                  _vm.passwordVisibleController.state
+                  passwordVisibleController.state
                       ? Icons.visibility
                       : Icons.visibility_off,
                   color: RegistrationColors.black,
                 ),
                 onPressed: () {
-                  _vm.passwordVisibleController.state = !_vm.passwordVisibleController.state;
+                  passwordVisibleController.state =
+                      !passwordVisibleController.state;
                 },
               ),
             ),
           );
-        }
-    );
+        });
   }
 
-
-  Widget _forgotPasswordButton() => Center(
-        child: TextButton(
-          onPressed: () {
-            return;
-          },
-          child: MyText.h3(
-            RegistrationStrings.loginForgotPassword,
-            color: RegistrationColors.black,
-            customStyle: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ),
-      );
-
-  Widget _signInButton() => Padding(
+  Widget _signUpButton() => Padding(
         padding:
             const EdgeInsets.only(right: RegistrationSizes.authMainPadding),
         child: SizedBox(
@@ -220,26 +231,27 @@ class AuthPageState extends State<AuthPage> {
               return;
             },
             child: MyText.h3(
-              RegistrationStrings.signIn,
+              RegistrationStrings.signUp,
             ),
           ),
         ),
       );
 
-  Widget _signUpButton() => Center(
-        child: InkWell(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const RegistrationPage(),
-              ),
-            );
-          },
-          child: MyText.h3(
-            RegistrationStrings.signUp,
-            color: RegistrationColors.black,
-            customStyle: const TextStyle(fontWeight: FontWeight.w600),
+  Widget _signInText() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          MyText.h5(RegistrationStrings.registrationLoginText,
+              color: RegistrationColors.textGray2),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: MyText.h3(
+              RegistrationStrings.signIn,
+              color: RegistrationColors.black,
+              customStyle: const TextStyle(fontWeight: FontWeight.w600),
+            ),
           ),
-        ),
+        ],
       );
 }

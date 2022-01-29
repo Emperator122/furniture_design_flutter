@@ -19,6 +19,11 @@ class RegistrationStrings {
   static const signIn = 'SIGN IN';
   static const signUp = 'SIGN UP';
 
+  static const registrationTitle = 'WELCOME';
+  static const registrationLoginText = 'Already have account? ';
+
+
+
   RegistrationStrings._();
 }
 
@@ -26,8 +31,10 @@ class RegistrationSizes {
   static const boardingButtonWidth = 159.0;
   static const boardingButtonHeight = 54.0;
   static const authMainPadding = 30.0;
-  static const authFormMargin = 15.0;
+  static const authFormMargin = 30.0;
   static const authSignInButtonHeight= 50.0;
+
+  static const registerTitleMargin = 20.0;
 
   RegistrationSizes._();
 }
@@ -39,6 +46,7 @@ class RegistrationColors {
   static const shadowColor = Color(0x518A959E);
   static const black = Color(0xFF303030);
   static const textGray = Color(0xFF909090);
+  static const textGray2 = Color(0xFF808080);
   static const authFieldsUnderline = Color(0xFFE0E0E0);
 
   RegistrationColors._();
