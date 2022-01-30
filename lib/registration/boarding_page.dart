@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/registration/auth_page.dart';
 import 'package:furniture/registration/resources.dart';
+import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class BoardingPage extends StatefulWidget {
@@ -54,7 +55,7 @@ class _BoardingPageState extends State<BoardingPage> {
           ),
           MyText.h1(
             RegistrationStrings.boardingTitle2,
-            color: RegistrationColors.black,
+            color: ApplicationColors.black,
             fontFamily: MyTextFontFamily.gelasio,
           ),
           const SizedBox(
@@ -64,7 +65,7 @@ class _BoardingPageState extends State<BoardingPage> {
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: MyText.h3(
               RegistrationStrings.boardingDescriptionText,
-              color: RegistrationColors.boardingText,
+              color: ApplicationColors.textGray2,
             ),
           ),
           SizedBox(

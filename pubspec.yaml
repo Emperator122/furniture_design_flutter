@@ -28,3 +28,6 @@ flutter:
   assets:
    - assets/
    - assets/registration/
+   - assets/appBar/
+   - assets/home/
+   - assets/mock/products_images/

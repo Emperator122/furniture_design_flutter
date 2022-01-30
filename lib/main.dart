@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:furniture/registration/boarding_page.dart';
+import 'package:furniture/ui/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
@@ -16,12 +18,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+        scaffoldBackgroundColor: ApplicationColors.white,
         textTheme: GoogleFonts.nunitoSansTextTheme(),
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF212121),
+              primary: ApplicationColors.buttonColor,
             )
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: ApplicationColors.white,
+          titleTextStyle: TextStyle(color: ApplicationColors.black),
+          elevation: 0.0,
+          iconTheme: IconThemeData(
+            color: Colors.black
+          )
         ),
       ),
       home: const BoardingPage(),

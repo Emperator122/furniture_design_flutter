@@ -41,12 +41,6 @@ class RegistrationSizes {
 
 class RegistrationColors {
   static const boardingTitle = Color(0xFF606060);
-  static const boardingText = Color(0xFF808080);
-
-  static const shadowColor = Color(0x518A959E);
-  static const black = Color(0xFF303030);
-  static const textGray = Color(0xFF909090);
-  static const textGray2 = Color(0xFF808080);
   static const authFieldsUnderline = Color(0xFFE0E0E0);
 
   RegistrationColors._();

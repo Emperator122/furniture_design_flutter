@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:furniture/home/home_page.dart';
 import 'package:furniture/misc/value_cubit.dart';
 import 'package:furniture/registration/registration_page.dart';
 import 'package:furniture/registration/resources.dart';
 import 'package:furniture/registration/widgets/auth_header.dart';
+import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class AuthPageVM {
@@ -52,8 +54,10 @@ class AuthPageState extends State<AuthPage> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding:
-              const EdgeInsets.only(right: RegistrationSizes.authMainPadding, bottom: RegistrationSizes.authMainPadding,),
+          padding: const EdgeInsets.only(
+            right: RegistrationSizes.authMainPadding,
+            bottom: RegistrationSizes.authMainPadding,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -84,7 +88,7 @@ class AuthPageState extends State<AuthPage> {
         children: [
           MyText.h1(
             RegistrationStrings.loginTitle,
-            color: RegistrationColors.textGray,
+            color: ApplicationColors.textGray,
             fontFamily: MyTextFontFamily.merriweather,
           ),
           const SizedBox(
@@ -92,7 +96,7 @@ class AuthPageState extends State<AuthPage> {
           ),
           MyText.h2(
             RegistrationStrings.loginSubtitle,
-            color: RegistrationColors.black,
+            color: ApplicationColors.black,
             fontFamily: MyTextFontFamily.merriweather,
             customStyle: const TextStyle(fontWeight: FontWeight.w700),
           ),
@@ -110,7 +114,7 @@ class AuthPageState extends State<AuthPage> {
       decoration: const BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: RegistrationColors.shadowColor,
+            color: ApplicationColors.shadowColor,
             blurRadius: 30.0,
             spreadRadius: 0.0,
             offset: Offset(0.0, 7.0), // shadow direction: bottom right
@@ -129,13 +133,13 @@ class AuthPageState extends State<AuthPage> {
           children: [
             MyText.h5(
               'Email',
-              color: RegistrationColors.textGray,
+              color: ApplicationColors.textGray,
             ),
             _emailField(),
             _margin(),
             MyText.h5(
               'Password',
-              color: RegistrationColors.textGray,
+              color: ApplicationColors.textGray,
             ),
             _passwordField(),
             _margin(),
@@ -181,18 +185,17 @@ class AuthPageState extends State<AuthPage> {
                   _vm.passwordVisibleController.state
                       ? Icons.visibility
                       : Icons.visibility_off,
-                  color: RegistrationColors.black,
+                  color: ApplicationColors.black,
                 ),
                 onPressed: () {
-                  _vm.passwordVisibleController.state = !_vm.passwordVisibleController.state;
+                  _vm.passwordVisibleController.state =
+                      !_vm.passwordVisibleController.state;
                 },
               ),
             ),
           );
-        }
-    );
+        });
   }
-
 
   Widget _forgotPasswordButton() => Center(
         child: TextButton(
@@ -201,7 +204,7 @@ class AuthPageState extends State<AuthPage> {
           },
           child: MyText.h3(
             RegistrationStrings.loginForgotPassword,
-            color: RegistrationColors.black,
+            color: ApplicationColors.black,
             customStyle: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),
@@ -217,7 +220,12 @@ class AuthPageState extends State<AuthPage> {
               elevation: 10,
             ),
             onPressed: () {
-              return;
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+                (route) => false,
+              );
             },
             child: MyText.h3(
               RegistrationStrings.signIn,
@@ -237,7 +245,7 @@ class AuthPageState extends State<AuthPage> {
           },
           child: MyText.h3(
             RegistrationStrings.signUp,
-            color: RegistrationColors.black,
+            color: ApplicationColors.black,
             customStyle: const TextStyle(fontWeight: FontWeight.w600),
           ),
         ),

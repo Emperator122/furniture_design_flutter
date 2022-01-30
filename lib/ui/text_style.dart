@@ -3,15 +3,18 @@ import 'dart:ui' as ui;
 import 'package:google_fonts/google_fonts.dart';
 
 class MyText {
-
   static Text h1(
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
     TextStyle? customStyle,
+    int? maxLines,
+    TextOverflow? overflow,
   }) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -21,13 +24,17 @@ class MyText {
   }
 
   static Text h2(
-      String text, {
-        Color? color,
-        MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
-        TextStyle? customStyle,
-      }) {
+    String text, {
+    Color? color,
+    MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextStyle? customStyle,
+    int? maxLines,
+    TextOverflow? overflow,
+  }) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -37,13 +44,17 @@ class MyText {
   }
 
   static Text h3(
-      String text, {
-        Color? color,
-        MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
-        TextStyle? customStyle,
-      }) {
+    String text, {
+    Color? color,
+    MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextStyle? customStyle,
+    int? maxLines,
+    TextOverflow? overflow,
+  }) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -53,13 +64,17 @@ class MyText {
   }
 
   static Text h4(
-      String text, {
-        Color? color,
-        MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
-        TextStyle? customStyle,
-      }) {
+    String text, {
+    Color? color,
+    MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextStyle? customStyle,
+    int? maxLines,
+    TextOverflow? overflow,
+  }) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -69,13 +84,17 @@ class MyText {
   }
 
   static Text h5(
-      String text, {
-        Color? color,
-        MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
-        TextStyle? customStyle,
-      }) {
+    String text, {
+    Color? color,
+    MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextStyle? customStyle,
+    int? maxLines,
+    TextOverflow? overflow,
+  }) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -85,13 +104,17 @@ class MyText {
   }
 
   static Text h6(
-      String text, {
-        Color? color,
-        MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
-        TextStyle? customStyle,
-      }) {
+    String text, {
+    Color? color,
+    MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextStyle? customStyle,
+    int? maxLines,
+    TextOverflow? overflow,
+  }) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -99,7 +122,6 @@ class MyText {
       ),
     );
   }
-
 
   MyText._();
 }
