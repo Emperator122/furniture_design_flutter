@@ -88,6 +88,10 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _buildBody() {
+    final ratio = (MediaQuery.of(context).size.width / 2 -
+            2 * HomeSizes.productsListMargin -
+            HomeSizes.productsListMargin) /
+        (HomeSizes.productImageHeight+10);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -103,8 +107,7 @@ class HomePageState extends State<HomePage> {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             crossAxisCount: 2,
-            childAspectRatio: HomeSizes.productImageWidth /
-                (HomeSizes.productImageHeight + 20),
+            childAspectRatio: ratio,
             padding: const EdgeInsets.symmetric(
                 horizontal: HomeSizes.productsListMargin),
             mainAxisSpacing: HomeSizes.productItemMargin,
