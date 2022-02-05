@@ -104,29 +104,31 @@ class HomePageState extends State<HomePage> {
           const SizedBox(
             height: HomeSizes.productsListMargin,
           ),
-          GridView.count(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            crossAxisCount: 2,
-            childAspectRatio: ratio,
-            padding: const EdgeInsets.symmetric(
-                horizontal: HomeSizes.productsListMargin),
-            mainAxisSpacing: HomeSizes.productItemMargin,
-            crossAxisSpacing: HomeSizes.productsListMargin,
-            children: ProductGridItemExt.mock()
-                .map<Widget>(
-                  (product) => ProductGridItem(
-                    product: product,
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ProductPage(product: product),
-                        ),
-                      );
-                    },
-                  ),
-                )
-                .toList(),
+          SafeArea(
+            child: GridView.count(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              childAspectRatio: ratio,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: HomeSizes.productsListMargin),
+              mainAxisSpacing: HomeSizes.productItemMargin,
+              crossAxisSpacing: HomeSizes.productsListMargin,
+              children: ProductGridItemExt.mock()
+                  .map<Widget>(
+                    (product) => ProductGridItem(
+                      product: product,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ProductPage(product: product),
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
         ],
       ),

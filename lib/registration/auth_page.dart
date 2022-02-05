@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:furniture/home/home_page.dart';
 import 'package:furniture/misc/value_cubit.dart';
 import 'package:furniture/registration/registration_page.dart';
 import 'package:furniture/registration/resources.dart';
 import 'package:furniture/registration/widgets/auth_header.dart';
+import 'package:furniture/tabs_page.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/text_style.dart';
 
@@ -222,7 +222,7 @@ class AuthPageState extends State<AuthPage> {
             onPressed: () {
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
-                  builder: (context) => const HomePage(),
+                  builder: (context) => const TabsPage(),
                 ),
                 (route) => false,
               );
