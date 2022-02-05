@@ -7,6 +7,7 @@ class MyText {
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextAlign? textAlign,
     TextStyle? customStyle,
     int? maxLines,
     TextOverflow? overflow,
@@ -15,6 +16,7 @@ class MyText {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -27,6 +29,7 @@ class MyText {
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextAlign? textAlign,
     TextStyle? customStyle,
     int? maxLines,
     TextOverflow? overflow,
@@ -35,6 +38,7 @@ class MyText {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -47,6 +51,7 @@ class MyText {
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextAlign? textAlign,
     TextStyle? customStyle,
     int? maxLines,
     TextOverflow? overflow,
@@ -55,6 +60,7 @@ class MyText {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -67,6 +73,7 @@ class MyText {
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextAlign? textAlign,
     TextStyle? customStyle,
     int? maxLines,
     TextOverflow? overflow,
@@ -75,6 +82,7 @@ class MyText {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -87,6 +95,7 @@ class MyText {
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextAlign? textAlign,
     TextStyle? customStyle,
     int? maxLines,
     TextOverflow? overflow,
@@ -95,6 +104,7 @@ class MyText {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
@@ -107,6 +117,7 @@ class MyText {
     String text, {
     Color? color,
     MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+    TextAlign? textAlign,
     TextStyle? customStyle,
     int? maxLines,
     TextOverflow? overflow,
@@ -115,10 +126,34 @@ class MyText {
       text,
       maxLines: maxLines,
       overflow: overflow,
+      textAlign: textAlign,
       style: fontFamily.textStyle(
         textStyle: customStyle,
         color: color,
         fontSize: 12,
+      ),
+    );
+  }
+
+  static Text custom(
+      String text, {
+        required double fontSize,
+        Color? color,
+        MyTextFontFamily fontFamily = MyTextFontFamily.nunitoSans,
+        TextAlign? textAlign,
+        TextStyle? customStyle,
+        int? maxLines,
+        TextOverflow? overflow,
+      }) {
+    return Text(
+      text,
+      maxLines: maxLines,
+      overflow: overflow,
+      textAlign: textAlign,
+      style: fontFamily.textStyle(
+        textStyle: customStyle,
+        color: color,
+        fontSize: fontSize,
       ),
     );
   }

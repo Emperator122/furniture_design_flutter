@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/home/categories_widget.dart';
-import 'package:furniture/home/models/item_category.dart';
+import 'package:furniture/home/models/product_category.dart';
 import 'package:furniture/home/product_grid_item.dart';
+import 'package:furniture/home/product/product_page.dart';
 import 'package:furniture/home/resources.dart';
 import 'package:furniture/misc/value_cubit.dart';
 import 'package:furniture/ui/colors.dart';
@@ -91,7 +92,7 @@ class HomePageState extends State<HomePage> {
     final ratio = (MediaQuery.of(context).size.width / 2 -
             2 * HomeSizes.productsListMargin -
             HomeSizes.productsListMargin) /
-        (HomeSizes.productImageHeight+10);
+        (HomeSizes.productImageHeight + 10);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -117,7 +118,11 @@ class HomePageState extends State<HomePage> {
                   (product) => ProductGridItem(
                     product: product,
                     onTap: () {
-                      return;
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ProductPage(product: product),
+                        ),
+                      );
                     },
                   ),
                 )

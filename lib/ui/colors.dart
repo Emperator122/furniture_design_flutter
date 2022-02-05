@@ -7,6 +7,7 @@ class ApplicationColors {
   static const textGray = Color(0xFF909090);
   static const textGray2 = Color(0xFF808080);
   static const textGray3 = Color(0xFF606060);
+  static const textGray4 = Color(0xFFE0E0E0);
   static const blurGray = Color(0xFFF0F0F0);
 
 

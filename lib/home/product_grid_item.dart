@@ -18,46 +18,49 @@ class ProductGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          alignment: Alignment.bottomRight,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(HomeSizes.productImageBorderRadius),
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(HomeSizes.productImageBorderRadius),
+                ),
+                child: Image.asset(
+                  product.image,
+                  fit: BoxFit.cover,
+                  height: HomeSizes.productImageHeight,
+                ),
               ),
-              child: Image.asset(
-                product.image,
-                fit: BoxFit.cover,
-                height: HomeSizes.productImageHeight,
+              Padding(
+                padding: const EdgeInsets.only(
+                  bottom: HomeSizes.productItemIconMargin,
+                  right: HomeSizes.productItemIconMargin,
+                ),
+                child: SvgPicture.asset(HomeIcons.shopping),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: HomeSizes.productItemIconMargin,
-                right: HomeSizes.productItemIconMargin,
-              ),
-              child: SvgPicture.asset(HomeIcons.shopping),
-            ),
-          ],
-        ),
-        MyText.h5(
-          product.name,
-          color: ApplicationColors.textGray3,
-          customStyle: const TextStyle(fontWeight: FontWeight.w400),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        MyText.h5(
-          '${HomeStrings.currencySymbol} ${product.price}',
-          color: ApplicationColors.black,
-          customStyle: const TextStyle(fontWeight: FontWeight.bold),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
+            ],
+          ),
+          MyText.h5(
+            product.name,
+            color: ApplicationColors.textGray3,
+            customStyle: const TextStyle(fontWeight: FontWeight.w400),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          MyText.h5(
+            '${HomeStrings.currencySymbol} ${product.price}',
+            color: ApplicationColors.black,
+            customStyle: const TextStyle(fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -119,7 +122,15 @@ extension ProductGridItemExt on ProductGridItem {
         name: 'Red lamp',
         price: randomPrice(),
         image: '$path/lamp_2.jpg',
-        description: 'Red lamp',
+        description: 'Human beings have been making useful, attractive objects '
+            'since time immemorial – including lighting.  Simple stone oil '
+            'lamps emerged in the Neolithic era, and by the 7th century BC '
+            'the Ancient Greeks were making elaborate decorative terracotta '
+            'versions, with ornamentation extending far beyond the lamp’s '
+            'practical purpose. The industrial revolution began in Britain and '
+            'spread around the world in the late 18th and early 19th century. '
+            'Before it, the person who conceived a product and the person who '
+            'physically made it were usually one and the same.',
         reviewsCount: 9,
         rating: 1.5,
       ),

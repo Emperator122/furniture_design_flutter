@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:furniture/home/models/item_category.dart';
+import 'package:furniture/home/models/product_category.dart';
 import 'package:furniture/home/resources.dart';
 import 'package:furniture/misc/value_cubit.dart';
 import 'package:furniture/ui/colors.dart';
