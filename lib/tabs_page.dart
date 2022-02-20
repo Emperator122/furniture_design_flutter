@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/home/favorite/favorite_page.dart';
 import 'package:furniture/home/home_page.dart';
 
 class TabsPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class TabsPageState extends State<TabsPage> {
         icon: SvgPicture.asset('assets/icon_favourite_inactive.svg'),
         activeIcon: SvgPicture.asset('assets/icon_favourite_active.svg'),
       ),
-      targetScreen: const SizedBox(),
+      targetScreen: const FavoritePage(),
     ),
     BottomNavigationBarExtendedItem(
       bottomNavigationBarItem: BottomNavigationBarItem(

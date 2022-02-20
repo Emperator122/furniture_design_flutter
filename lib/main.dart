@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:furniture/registration/boarding_page.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
