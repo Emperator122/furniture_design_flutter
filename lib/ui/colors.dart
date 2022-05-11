@@ -9,7 +9,7 @@ class ApplicationColors {
   static const textGray3 = Color(0xFF606060);
   static const textGray4 = Color(0xFFE0E0E0);
   static const blurGray = Color(0xFFF0F0F0);
-
+  static const hintGray = Color(0xFF999999);
 
   static const buttonColor = Color(0xFF212121);
 

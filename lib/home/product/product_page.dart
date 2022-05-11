@@ -6,10 +6,10 @@ import 'package:furniture/home/models/product.dart';
 import 'package:furniture/home/product/back_button.dart';
 import 'package:furniture/home/product/product_image_widget.dart';
 import 'package:furniture/home/product/resources.dart';
-import 'package:furniture/home/resources.dart';
 import 'package:furniture/misc/value_cubit.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/product_counter_widget.dart';
+import 'package:furniture/ui/strings.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class ProductVM {
@@ -206,7 +206,7 @@ class ProductPageState extends State<ProductPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         MyText.h1(
-          '${HomeStrings.currencySymbol} ${widget.product.price}',
+          '${ApplicationStrings.currencySymbol} ${widget.product.price}',
           customStyle: const TextStyle(
             fontWeight: FontWeight.bold,
           ),

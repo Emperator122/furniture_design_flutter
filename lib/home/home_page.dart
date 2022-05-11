@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/cart/cart_page.dart';
 import 'package:furniture/home/categories_widget.dart';
 import 'package:furniture/home/models/product_category.dart';
 import 'package:furniture/home/product_grid_item.dart';
@@ -47,6 +48,7 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: SvgPicture.asset(HomeIcons.search),
           onPressed: () {
@@ -57,7 +59,11 @@ class HomePageState extends State<HomePage> {
           IconButton(
             icon: SvgPicture.asset(HomeIcons.cart),
             onPressed: () {
-              return;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CartPage(),
+                ),
+              );
             },
           ),
         ],
@@ -68,23 +74,21 @@ class HomePageState extends State<HomePage> {
   }
 
   Widget _buildTitle() {
-    return Center(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          MyText.h3(
-            HomeStrings.appBarTitle,
-            color: ApplicationColors.textGray,
-            fontFamily: MyTextFontFamily.gelasio,
-            customStyle: const TextStyle(fontWeight: FontWeight.w400),
-          ),
-          MyText.h3(
-            HomeStrings.appBarSubtitle,
-            fontFamily: MyTextFontFamily.gelasio,
-            customStyle: const TextStyle(fontWeight: FontWeight.w700),
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        MyText.h3(
+          HomeStrings.appBarTitle,
+          color: ApplicationColors.textGray,
+          fontFamily: MyTextFontFamily.gelasio,
+          customStyle: const TextStyle(fontWeight: FontWeight.w400),
+        ),
+        MyText.h3(
+          HomeStrings.appBarSubtitle,
+          fontFamily: MyTextFontFamily.gelasio,
+          customStyle: const TextStyle(fontWeight: FontWeight.w700),
+        ),
+      ],
     );
   }
 

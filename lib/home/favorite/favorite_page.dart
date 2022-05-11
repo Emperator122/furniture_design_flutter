@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:furniture/cart/cart_page.dart';
 import 'package:furniture/home/favorite/favorite_product_container.dart';
 import 'package:furniture/home/favorite/resources.dart';
 import 'package:furniture/home/models/product.dart';
@@ -32,6 +33,7 @@ class FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: IconButton(
           icon: SvgPicture.asset(HomeIcons.search),
           onPressed: () {
@@ -42,7 +44,11 @@ class FavoritePageState extends State<FavoritePage> {
           IconButton(
             icon: SvgPicture.asset(HomeIcons.cart),
             onPressed: () {
-              return;
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const CartPage(),
+                ),
+              );
             },
           ),
         ],
@@ -58,13 +64,11 @@ class FavoritePageState extends State<FavoritePage> {
   }
 
   Widget _buildTitle() {
-    return Center(
-      child: MyText.h4(
-        FavoriteStrings.appBarTitle,
-        color: ApplicationColors.black,
-        fontFamily: MyTextFontFamily.merriweather,
-        customStyle: const TextStyle(fontWeight: FontWeight.bold),
-      ),
+    return MyText.h4(
+      FavoriteStrings.appBarTitle,
+      color: ApplicationColors.black,
+      fontFamily: MyTextFontFamily.merriweather,
+      customStyle: const TextStyle(fontWeight: FontWeight.bold),
     );
   }
 

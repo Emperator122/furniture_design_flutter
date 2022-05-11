@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/home/favorite/resources.dart';
 import 'package:furniture/home/models/product.dart';
-import 'package:furniture/home/resources.dart';
 import 'package:furniture/ui/colors.dart';
+import 'package:furniture/ui/strings.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class FavoriteProductContainer extends StatelessWidget {
@@ -60,7 +59,7 @@ class FavoriteProductContainer extends StatelessWidget {
           ),
         ),
         MyText.h4(
-          '${HomeStrings.currencySymbol} ${product.price}',
+          '${ApplicationStrings.currencySymbol} ${product.price}',
           color: ApplicationColors.black,
           customStyle: const TextStyle(
             fontWeight: FontWeight.bold,

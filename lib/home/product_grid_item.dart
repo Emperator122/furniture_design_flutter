@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/home/models/product.dart';
 import 'package:furniture/home/resources.dart';
 import 'package:furniture/ui/colors.dart';
+import 'package:furniture/ui/strings.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -53,7 +54,7 @@ class ProductGridItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           MyText.h5(
-            '${HomeStrings.currencySymbol} ${product.price}',
+            '${ApplicationStrings.currencySymbol} ${product.price}',
             color: ApplicationColors.black,
             customStyle: const TextStyle(fontWeight: FontWeight.bold),
             maxLines: 1,

@@ -9,9 +9,6 @@ class HomeIcons {
 class HomeStrings {
   static const appBarTitle = 'Make Home';
   static const appBarSubtitle = 'BEAUTIFUL';
-  static const currencySymbol = '\$';
-
-
 
   HomeStrings._();
 }
