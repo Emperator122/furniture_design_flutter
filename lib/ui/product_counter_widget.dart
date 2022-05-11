@@ -10,11 +10,17 @@ const _color = ApplicationColors.textGray4;
 const _borderRadius = 10.0;
 
 class ProductCounter extends StatelessWidget {
-  final ValueCubit<int> countController;
+  final int count;
+  final ValueCubit<int>? countController;
+  final void Function(int newCount)? onIncrease;
+  final void Function(int newCount)? onDecrease;
 
   const ProductCounter({
     Key? key,
-    required this.countController,
+    this.count = 0,
+    this.countController,
+    this.onIncrease,
+    this.onDecrease,
   }) : super(key: key);
 
   @override
@@ -24,30 +30,69 @@ class ProductCounter extends StatelessWidget {
       children: [
         InkResponse(
           radius: _buttonSize * 0.67,
-          onTap: () => countController.state++,
-          child: _buildButtonContainer(ProductIcons.plus),
+          onTap: () {
+            final newCount = (countController?.state ?? count) + 1;
+            countController?.state = newCount;
+            if (onIncrease != null) {
+              onIncrease!(newCount);
+            }
+          },
+          child: const ButtonContainer(
+            assetName: ProductIcons.plus,
+            size: _buttonSize,
+          ),
         ),
-        StreamBuilder(
-            stream: countController.stream,
-            builder: (context, _) {
+        if (countController != null)
+          StreamBuilder(
+            stream: countController!.stream,
+            builder: (context, state) {
               return MyText.h3(
-                ProductStrings.counterTextFormatter(countController.state),
+                ProductStrings.counterTextFormatter(countController!.state),
                 overflow: TextOverflow.ellipsis,
                 customStyle: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
               );
-            }),
+            },
+          )
+        else
+          MyText.h3(
+            ProductStrings.counterTextFormatter(count),
+            overflow: TextOverflow.ellipsis,
+            customStyle: const TextStyle(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         InkResponse(
           radius: _buttonSize * 0.67,
-          onTap: () => countController.state--,
-          child: _buildButtonContainer(ProductIcons.minus),
+          onTap: () {
+            final newCount = (countController?.state ?? count) - 1;
+            countController?.state = newCount;
+            if (onDecrease != null) {
+              onDecrease!(newCount);
+            }
+          },
+          child: const ButtonContainer(
+            assetName: ProductIcons.minus,
+            size: _buttonSize,
+          ),
         ),
       ],
     );
   }
+}
 
-  Widget _buildButtonContainer(String assetName) {
+class ButtonContainer extends StatelessWidget {
+  final String assetName;
+  final double size;
+
+  const ButtonContainer({
+    Key? key,
+    required this.size,
+    required this.assetName,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
     return Container(
       height: _buttonSize,
       width: _buttonSize,

@@ -54,7 +54,7 @@ class ProductGridItem extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
           MyText.h5(
-            '${ApplicationStrings.currencySymbol} ${product.price}',
+            '${ApplicationStrings.currencySymbol} ${product.uiPrice}',
             color: ApplicationColors.black,
             customStyle: const TextStyle(fontWeight: FontWeight.bold),
             maxLines: 1,

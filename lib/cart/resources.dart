@@ -1,7 +1,16 @@
+import 'package:furniture/cart/models/cart_product.dart';
+
 abstract class CartStrings {
   static const pageTitle = 'MY CART';
   static const totalText = 'Total:';
   static const checkOutText = 'CHECK OUT';
+
+  static String getUITotalPrice(List<CartProduct> products) => products
+      .fold<double>(
+          0,
+          (previousValue, element) =>
+              previousValue + element.product.price * element.count)
+      .toStringAsFixed(2);
 }
 
 abstract class CartSizes {

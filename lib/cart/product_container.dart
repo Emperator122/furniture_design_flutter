@@ -1,46 +1,22 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:furniture/cart/bloc.dart';
 import 'package:furniture/cart/resources.dart';
 import 'package:furniture/home/favorite/resources.dart';
-import 'package:furniture/home/models/product.dart';
-import 'package:furniture/misc/value_cubit.dart';
+import 'package:furniture/cart/models/cart_product.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/product_counter_widget.dart';
 import 'package:furniture/ui/strings.dart';
 import 'package:furniture/ui/text_style.dart';
 
-class _ProductVM {
-  late final ValueCubit<int> countController;
-  late final List<StreamSubscription> streams;
-
-  _ProductVM() {
-    streams = <StreamSubscription>[];
-    countController = ValueCubit<int>(1);
-
-    streams.add(
-      countController.stream.listen((state) {
-        if (state <= 0) {
-          countController.state++;
-        }
-      }),
-    );
-  }
-
-  void close() {
-    countController.close();
-    for (final stream in streams) {
-      stream.cancel();
-    }
-  }
-}
-
 class ProductContainer extends StatefulWidget {
-  final Product product;
+  final CartProduct cartProduct;
+  final CartBloc cartBloc;
+
   const ProductContainer({
     Key? key,
-    required this.product,
+    required this.cartProduct,
+    required this.cartBloc,
   }) : super(key: key);
 
   @override
@@ -48,18 +24,14 @@ class ProductContainer extends StatefulWidget {
 }
 
 class ProductContainerState extends State<ProductContainer> {
-  late final _ProductVM _vm;
-
   @override
   void initState() {
     super.initState();
-    _vm = _ProductVM();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _vm.close();
   }
 
   @override
@@ -87,7 +59,7 @@ class ProductContainerState extends State<ProductContainer> {
         Radius.circular(CartSizes.productImageBorderRadius),
       ),
       child: Image.asset(
-        widget.product.image,
+        widget.cartProduct.product.image,
         fit: BoxFit.cover,
         height: CartSizes.productImageSize,
         width: CartSizes.productImageSize,
@@ -101,7 +73,7 @@ class ProductContainerState extends State<ProductContainer> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         MyText.h5(
-          widget.product.name,
+          widget.cartProduct.product.name,
           color: ApplicationColors.textGray3,
           customStyle: const TextStyle(
             fontWeight: FontWeight.w600,
@@ -109,7 +81,15 @@ class ProductContainerState extends State<ProductContainer> {
         ),
         SizedBox(
           width: CartSizes.productCounterWidth,
-          child: ProductCounter(countController: _vm.countController),
+          child: ProductCounter(
+            count: widget.cartProduct.count,
+            onIncrease: (int newValue) => widget.cartBloc.add(
+              IncreaseProductCount(product: widget.cartProduct),
+            ),
+            onDecrease: (int newValue) => widget.cartBloc.add(
+              DecreaseProductCount(product: widget.cartProduct),
+            ),
+          ),
         ),
       ],
     );
@@ -124,20 +104,18 @@ class ProductContainerState extends State<ProductContainer> {
           padding: EdgeInsets.zero,
           constraints: const BoxConstraints(),
           splashRadius: 15,
-          onPressed: () => true,
+          onPressed: () => widget.cartBloc.add(
+            RemoveProduct(product: widget.cartProduct),
+          ),
           icon: SvgPicture.asset(FavoriteImages.remove),
         ),
-        StreamBuilder<int>(
-          stream: _vm.countController.stream,
-          builder: (context, snapshot) {
-            return MyText.h4(
-              '${ApplicationStrings.currencySymbol} ${widget.product.uiPriceMultiply(_vm.countController.state)}',
-              color: ApplicationColors.black,
-              customStyle: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          }
+        MyText.h4(
+          '${ApplicationStrings.currencySymbol} '
+          '${widget.cartProduct.product.uiPriceMultiply(widget.cartProduct.count)}',
+          color: ApplicationColors.black,
+          customStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );

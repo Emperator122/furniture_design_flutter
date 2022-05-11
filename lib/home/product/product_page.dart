@@ -206,7 +206,7 @@ class ProductPageState extends State<ProductPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         MyText.h1(
-          '${ApplicationStrings.currencySymbol} ${widget.product.price}',
+          '${ApplicationStrings.currencySymbol} ${widget.product.uiPrice}',
           customStyle: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
