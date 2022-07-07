@@ -16,11 +16,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     add(Initialize());
   }
 
-  void _onInitialize(
+  Future<void> _onInitialize(
     Initialize event,
     Emitter<CartState> emit,
-  ) {
-    final products = repository.getProducts();
+  ) async {
+    final products = await repository.getProducts();
     emit(CartLoadedState(products: products));
   }
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/cart/cart_page.dart';
+import 'package:furniture/home/bloc.dart';
 import 'package:furniture/home/categories_widget.dart';
+import 'package:furniture/home/models/product.dart';
 import 'package:furniture/home/models/product_category.dart';
 import 'package:furniture/home/product_grid_item.dart';
 import 'package:furniture/home/product/product_page.dart';
@@ -13,11 +16,11 @@ import 'package:furniture/ui/text_style.dart';
 
 class HomePageVM {
   final ValueCubit<ProductCategory?> categoryController;
-  final ProductsRepository productsRepository;
+  late final HomePageBloc _bloc;
 
   HomePageVM()
       : categoryController = ValueCubit<ProductCategory?>(null),
-        productsRepository = ProductsRepositoryMock();
+        _bloc = HomePageBloc(repository: ProductsRepositoryMock());
 
   void close() {
     categoryController.close();
@@ -73,7 +76,16 @@ class HomePageState extends State<HomePage> {
         ],
         title: _buildTitle(),
       ),
-      body: _buildBody(),
+      body: BlocBuilder(
+          bloc: _vm._bloc,
+          builder: (_, state) {
+            if (state is HomeLoadedState) {
+              return _buildBody(state.products);
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 
@@ -96,7 +108,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(List<Product> products) {
     final ratio = (MediaQuery.of(context).size.width / 2 -
             2 * HomeSizes.productsListMargin -
             HomeSizes.productsListMargin) /
@@ -122,8 +134,7 @@ class HomePageState extends State<HomePage> {
                   horizontal: HomeSizes.productsListMargin),
               mainAxisSpacing: HomeSizes.productItemMargin,
               crossAxisSpacing: HomeSizes.productsListMargin,
-              children: _vm.productsRepository
-                  .getProducts()
+              children: products
                   .map<Widget>(
                     (product) => ProductGridItem(
                       product: product,

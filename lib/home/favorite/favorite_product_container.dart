@@ -8,10 +8,12 @@ import 'package:furniture/ui/text_style.dart';
 
 class FavoriteProductContainer extends StatelessWidget {
   final Product product;
+  final void Function(Product product)? onRemove;
 
   const FavoriteProductContainer({
     Key? key,
     required this.product,
+    this.onRemove
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,7 @@ class FavoriteProductContainer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkResponse(
-          onTap: () => true,
+          onTap: () => onRemove?.call(product),
           child: SvgPicture.asset(FavoriteImages.remove),
         ),
         InkResponse(

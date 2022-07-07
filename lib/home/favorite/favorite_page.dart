@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/cart/cart_page.dart';
+import 'package:furniture/home/favorite/bloc.dart';
 import 'package:furniture/home/favorite/favorite_product_container.dart';
 import 'package:furniture/home/favorite/resources.dart';
 import 'package:furniture/home/models/product.dart';
@@ -10,9 +12,11 @@ import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class FavoritePageVm {
-  final FavoriteRepository favoriteRepository;
+  late final FavoriteBloc _bloc;
 
-  FavoritePageVm() : favoriteRepository = FavoriteRepositoryMock();
+  FavoritePageVm() {
+    _bloc = FavoriteBloc(repository: FavoriteRepositoryMock());
+  }
 }
 
 class FavoritePage extends StatefulWidget {
@@ -26,13 +30,11 @@ class FavoritePage extends StatefulWidget {
 
 class FavoritePageState extends State<FavoritePage> {
   late final FavoritePageVm _vm;
-  late final List<Product> products;
 
   @override
   void initState() {
     super.initState();
     _vm = FavoritePageVm();
-    products = _vm.favoriteRepository.getProducts();
   }
 
   @override
@@ -60,12 +62,21 @@ class FavoritePageState extends State<FavoritePage> {
         ],
         title: _buildTitle(),
       ),
-      body: Stack(
-        children: [
-          _buildBody(),
-          _buildButton(),
-        ],
-      ),
+      body: BlocBuilder(
+          bloc: _vm._bloc,
+          builder: (_, state) {
+            if (state is FavoriteLoadedState) {
+              return Stack(
+                children: [
+                  _buildBody(state.products),
+                  _buildButton(),
+                ],
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 
@@ -78,7 +89,7 @@ class FavoritePageState extends State<FavoritePage> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(List<Product> products) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: FavoriteSizes.mainPadding,
@@ -95,7 +106,12 @@ class FavoritePageState extends State<FavoritePage> {
                     final product = products[index];
                     return Column(
                       children: [
-                        FavoriteProductContainer(product: product),
+                        FavoriteProductContainer(
+                          product: product,
+                          onRemove: (product) => _vm._bloc.add(
+                            RemoveProduct(product: product),
+                          ),
+                        ),
                         if (index != products.length - 1)
                           const Divider(
                             height: FavoriteSizes.productPadding * 2,

@@ -72,4 +72,9 @@ class MockDataManager {
       ),
     ];
   }
+
+  Future<void> get randomTimeout {
+    final rnd = Random();
+    return Future.delayed(Duration(milliseconds: 800 + rnd.nextInt(1500)));
+  }
 }
