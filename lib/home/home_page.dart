@@ -80,7 +80,7 @@ class HomePageState extends State<HomePage> {
           bloc: _vm._bloc,
           builder: (_, state) {
             if (state is HomeLoadedState) {
-              return _buildBody(state.products);
+              return _buildBody(state.products, state.categories);
             }
             return const Center(
               child: CircularProgressIndicator(),
@@ -108,7 +108,7 @@ class HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBody(List<Product> products) {
+  Widget _buildBody(List<Product> products, List<ProductCategory>? categories) {
     final ratio = (MediaQuery.of(context).size.width / 2 -
             2 * HomeSizes.productsListMargin -
             HomeSizes.productsListMargin) /
@@ -117,10 +117,15 @@ class HomePageState extends State<HomePage> {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          CategoriesWidget(
-            categories: CategoriesWidgetExt.mock(),
-            selectedCategoryController: _vm.categoryController,
-          ),
+          if (categories != null)
+            CategoriesWidget(
+              categories: categories,
+              selectedCategoryController: _vm.categoryController,
+            )
+          else
+            const Center(
+              child: CircularProgressIndicator(),
+            ),
           const SizedBox(
             height: HomeSizes.productsListMargin,
           ),

@@ -107,35 +107,3 @@ class CategoryIcon extends StatelessWidget {
     );
   }
 }
-
-extension CategoriesWidgetExt on CategoriesWidget {
-  static List<ProductCategory> mock() {
-    const dir = 'assets/home';
-    return <ProductCategory>[
-      ProductCategory(
-        icon: '$dir/cats_favourite.svg',
-        name: 'Popular',
-      ),
-      ProductCategory(
-        icon: '$dir/cats_chair.svg',
-        name: 'Chair',
-      ),
-      ProductCategory(
-        icon: '$dir/cats_table.svg',
-        name: 'Table',
-      ),
-      ProductCategory(
-        icon: '$dir/cats_armchair.svg',
-        name: 'Armchair',
-      ),
-      ProductCategory(
-        icon: '$dir/cats_bed.svg',
-        name: 'Bed',
-      ),
-      ProductCategory(
-        icon: '$dir/cats_lamp.svg',
-        name: 'Lamp',
-      ),
-    ];
-  }
-}

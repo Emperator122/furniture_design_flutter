@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:furniture/home/models/product.dart';
+import 'package:furniture/home/models/product_category.dart';
 
 class MockDataManager {
   List<Product> getProducts() {
@@ -73,8 +74,38 @@ class MockDataManager {
     ];
   }
 
+  List<ProductCategory> getCategories() {
+    const dir = 'assets/home';
+    return <ProductCategory>[
+      ProductCategory(
+        icon: '$dir/cats_favourite.svg',
+        name: 'Popular',
+      ),
+      ProductCategory(
+        icon: '$dir/cats_chair.svg',
+        name: 'Chair',
+      ),
+      ProductCategory(
+        icon: '$dir/cats_table.svg',
+        name: 'Table',
+      ),
+      ProductCategory(
+        icon: '$dir/cats_armchair.svg',
+        name: 'Armchair',
+      ),
+      ProductCategory(
+        icon: '$dir/cats_bed.svg',
+        name: 'Bed',
+      ),
+      ProductCategory(
+        icon: '$dir/cats_lamp.svg',
+        name: 'Lamp',
+      ),
+    ];
+  }
+
   Future<void> get randomTimeout {
     final rnd = Random();
-    return Future.delayed(Duration(milliseconds: 800 + rnd.nextInt(1500)));
+    return Future.delayed(Duration(milliseconds: 800 + rnd.nextInt(1000)));
   }
 }
