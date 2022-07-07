@@ -24,38 +24,44 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoadedState(products: products));
   }
 
-  void _onIncreaseProductCount(
+  Future<void> _onIncreaseProductCount(
     IncreaseProductCount event,
     Emitter<CartState> emit,
-  ) {
+  ) async {
     if (state is CartLoadedState) {
+      final loadedState = state as CartLoadedState;
+      emit(loadedState.copyWith(sendingData: true));
       if (_changeProductCount(1, event.product)) {
-        final products = (state as CartLoadedState).products;
-        emit(CartLoadedState(products: products));
+        await repository.changeProductCount(1, event.product);
+        emit(loadedState.copyWith(sendingData: false));
       }
     }
   }
 
-  void _onDecreaseProductCount(
+  Future<void> _onDecreaseProductCount(
     DecreaseProductCount event,
     Emitter<CartState> emit,
-  ) {
+  ) async {
     if (state is CartLoadedState) {
+      final loadedState = state as CartLoadedState;
+      emit(loadedState.copyWith(sendingData: true));
       if (_changeProductCount(-1, event.product)) {
-        final products = (state as CartLoadedState).products;
-        emit(CartLoadedState(products: products));
+        await repository.changeProductCount(-1, event.product);
+        emit(loadedState.copyWith(sendingData: false));
       }
     }
   }
 
-  void _onRemoveProduct(
+  Future<void> _onRemoveProduct(
     RemoveProduct event,
     Emitter<CartState> emit,
-  ) {
+  ) async {
     if (state is CartLoadedState) {
-      final products = (state as CartLoadedState).products;
+      final loadedState = state as CartLoadedState;
+      emit(loadedState.copyWith(sendingData: true));
+      final products = loadedState.products;
       products.remove(event.product);
-      emit(CartLoadedState(products: products));
+      emit(loadedState.copyWith(sendingData: false));
     }
   }
 
@@ -104,8 +110,22 @@ abstract class CartState {}
 
 class CartLoadedState extends CartState {
   final List<CartProduct> products;
+  final bool sendingData;
 
-  CartLoadedState({required this.products});
+  CartLoadedState({
+    required this.products,
+    this.sendingData = false,
+  });
+
+  CartLoadedState copyWith({
+    List<CartProduct>? products,
+    bool? sendingData,
+  }) {
+    return CartLoadedState(
+      products: products ?? this.products,
+      sendingData: sendingData ?? this.sendingData,
+    );
+  }
 }
 
 class CartEmpty extends CartState {}

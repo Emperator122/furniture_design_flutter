@@ -34,6 +34,8 @@ class ProductContainerState extends State<ProductContainer> {
     super.dispose();
   }
 
+  CartLoadedState get loadedState => widget.cartBloc.state as CartLoadedState;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -83,12 +85,20 @@ class ProductContainerState extends State<ProductContainer> {
           width: CartSizes.productCounterWidth,
           child: ProductCounter(
             count: widget.cartProduct.count,
-            onIncrease: (int newValue) => widget.cartBloc.add(
-              IncreaseProductCount(product: widget.cartProduct),
-            ),
-            onDecrease: (int newValue) => widget.cartBloc.add(
-              DecreaseProductCount(product: widget.cartProduct),
-            ),
+            onIncrease: (int newValue) {
+              if(!loadedState.sendingData) {
+                widget.cartBloc.add(
+                  IncreaseProductCount(product: widget.cartProduct),
+                );
+              }
+            },
+            onDecrease: (int newValue) {
+              if(!loadedState.sendingData) {
+                widget.cartBloc.add(
+                  DecreaseProductCount(product: widget.cartProduct),
+                );
+              }
+            }
           ),
         ),
       ],

@@ -4,6 +4,7 @@ import 'package:furniture/misc/mock_data_manager.dart';
 
 abstract class CartRepository {
   Future<List<CartProduct>> getProducts();
+  Future<void> changeProductCount(int count, CartProduct product);
 }
 
 class CartRepositoryMock extends CartRepository {
@@ -25,5 +26,10 @@ class CartRepositoryMock extends CartRepository {
         .map<CartProduct>((e) => CartProduct(product: e, count: 1))
         .toList()
       ..shuffle();
+  }
+
+  @override
+  Future<void> changeProductCount(int count, CartProduct product) async {
+    await mockDataManager.randomLowTimeout;
   }
 }
