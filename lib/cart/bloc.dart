@@ -1,16 +1,30 @@
 import 'package:bloc/bloc.dart';
 import 'package:furniture/cart/models/cart_product.dart';
+import 'package:furniture/repositories/cart_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
+  final CartRepository repository;
+
   CartBloc({
-    required CartState initialState,
-  }) : super(initialState) {
-    on<IncreaseProductCount>(_increaseProductCount);
-    on<DecreaseProductCount>(_decreaseProductCount);
-    on<RemoveProduct>(_removeProduct);
+    required this.repository,
+  }) : super(CartLoadingState()) {
+    on<Initialize>(_onInitialize);
+    on<IncreaseProductCount>(_onIncreaseProductCount);
+    on<DecreaseProductCount>(_onDecreaseProductCount);
+    on<RemoveProduct>(_onRemoveProduct);
+
+    add(Initialize());
   }
 
-  void _increaseProductCount(
+  void _onInitialize(
+    Initialize event,
+    Emitter<CartState> emit,
+  ) {
+    final products = repository.getProducts();
+    emit(CartLoadedState(products: products));
+  }
+
+  void _onIncreaseProductCount(
     IncreaseProductCount event,
     Emitter<CartState> emit,
   ) {
@@ -22,7 +36,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _decreaseProductCount(
+  void _onDecreaseProductCount(
     DecreaseProductCount event,
     Emitter<CartState> emit,
   ) {
@@ -34,7 +48,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
   }
 
-  void _removeProduct(
+  void _onRemoveProduct(
     RemoveProduct event,
     Emitter<CartState> emit,
   ) {
@@ -51,14 +65,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   ) {
     assert(state is CartLoadedState);
     final products = (state as CartLoadedState).products;
-    final index = products.indexWhere((element) => element.product == product.product);
+    final index =
+        products.indexWhere((element) => element.product == product.product);
     if (index == -1) return false;
     final oldProduct = products[index];
     products.removeAt(index);
-    final newProduct = CartProduct(
-      product: oldProduct.product,
-      count: oldProduct.count + count,
-    );
+    final newProduct = oldProduct.copyWith(count: oldProduct.count + count);
     if (newProduct.count > 0) {
       products.insert(index, newProduct);
     }
@@ -67,6 +79,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 }
 
 abstract class CartEvent {}
+
+class Initialize extends CartEvent {}
 
 class IncreaseProductCount extends CartEvent {
   final CartProduct product;

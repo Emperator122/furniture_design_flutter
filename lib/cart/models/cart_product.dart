@@ -8,4 +8,14 @@ class CartProduct {
     required this.product,
     required this.count,
   });
+
+  CartProduct copyWith({
+    Product? product,
+    int? count,
+  }) {
+    return CartProduct(
+      product: product ?? this.product,
+      count: count ?? this.count,
+    );
+  }
 }

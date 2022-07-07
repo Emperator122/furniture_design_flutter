@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +6,7 @@ import 'package:furniture/cart/promo_field.dart';
 import 'package:furniture/cart/resources.dart';
 import 'package:furniture/cart/product_container.dart';
 import 'package:furniture/cart/models/cart_product.dart';
-import 'package:furniture/home/product_grid_item.dart';
+import 'package:furniture/repositories/cart_repository.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/icons.dart';
 import 'package:furniture/ui/strings.dart';
@@ -16,9 +15,9 @@ import 'package:furniture/ui/text_style.dart';
 class CartPageVM {
   late final CartBloc cartBloc;
 
-  CartPageVM(List<CartProduct> products) {
+  CartPageVM() {
     cartBloc = CartBloc(
-      initialState: CartLoadedState(products: products),
+      repository: CartRepositoryMock(),
     );
   }
 }
@@ -31,14 +30,12 @@ class CartPage extends StatefulWidget {
 }
 
 class CartPageState extends State<CartPage> {
-  late final List<CartProduct> products;
   late final CartPageVM _vm;
 
   @override
   void initState() {
     super.initState();
-    products = CartPageExt.mock();
-    _vm = CartPageVM(products);
+    _vm = CartPageVM();
   }
 
   @override
@@ -85,14 +82,14 @@ class CartPageState extends State<CartPage> {
                   children: List.generate(
                     state.products.length,
                     (index) {
-                      final product = products[index];
+                      final product = state.products[index];
                       return Column(
                         children: [
                           ProductContainer(
                             cartProduct: product,
                             cartBloc: _vm.cartBloc,
                           ),
-                          if (index != products.length - 1)
+                          if (index != state.products.length - 1)
                             const Divider(
                               height: CartSizes.productPadding * 2,
                               thickness: 1.0,
@@ -105,13 +102,15 @@ class CartPageState extends State<CartPage> {
                 ),
               ),
               SafeArea(
-                child: _buildBottomPart(products),
+                child: _buildBottomPart(state.products),
               ),
             ],
           );
         }
 
-        return const CircularProgressIndicator();
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
       },
     );
   }
@@ -164,21 +163,5 @@ class CartPageState extends State<CartPage> {
           fontSize: 20,
           customStyle: const TextStyle(fontWeight: FontWeight.w600)),
     );
-  }
-}
-
-extension CartPageExt on CartPage {
-  static List<CartProduct> mock() {
-    final products = ProductGridItemExt.mock();
-
-    int randomCount() {
-      final rnd = Random();
-      return 1 + rnd.nextInt(products.length);
-    }
-
-    return products
-        .getRange(0, randomCount())
-        .map<CartProduct>((e) => CartProduct(product: e, count: 1))
-        .toList();
   }
 }

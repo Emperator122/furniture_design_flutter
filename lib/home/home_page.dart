@@ -7,13 +7,17 @@ import 'package:furniture/home/product_grid_item.dart';
 import 'package:furniture/home/product/product_page.dart';
 import 'package:furniture/home/resources.dart';
 import 'package:furniture/misc/value_cubit.dart';
+import 'package:furniture/repositories/products_repository.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/text_style.dart';
 
 class HomePageVM {
   final ValueCubit<ProductCategory?> categoryController;
+  final ProductsRepository productsRepository;
 
-  HomePageVM() : categoryController = ValueCubit<ProductCategory?>(null);
+  HomePageVM()
+      : categoryController = ValueCubit<ProductCategory?>(null),
+        productsRepository = ProductsRepositoryMock();
 
   void close() {
     categoryController.close();
@@ -118,7 +122,8 @@ class HomePageState extends State<HomePage> {
                   horizontal: HomeSizes.productsListMargin),
               mainAxisSpacing: HomeSizes.productItemMargin,
               crossAxisSpacing: HomeSizes.productsListMargin,
-              children: ProductGridItemExt.mock()
+              children: _vm.productsRepository
+                  .getProducts()
                   .map<Widget>(
                     (product) => ProductGridItem(
                       product: product,

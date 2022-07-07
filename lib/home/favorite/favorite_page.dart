@@ -1,15 +1,19 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:furniture/cart/cart_page.dart';
 import 'package:furniture/home/favorite/favorite_product_container.dart';
 import 'package:furniture/home/favorite/resources.dart';
 import 'package:furniture/home/models/product.dart';
-import 'package:furniture/home/product_grid_item.dart';
 import 'package:furniture/home/resources.dart';
+import 'package:furniture/repositories/favorite_repository.dart';
 import 'package:furniture/ui/colors.dart';
 import 'package:furniture/ui/text_style.dart';
+
+class FavoritePageVm {
+  final FavoriteRepository favoriteRepository;
+
+  FavoritePageVm() : favoriteRepository = FavoriteRepositoryMock();
+}
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -21,12 +25,14 @@ class FavoritePage extends StatefulWidget {
 }
 
 class FavoritePageState extends State<FavoritePage> {
+  late final FavoritePageVm _vm;
   late final List<Product> products;
 
   @override
   void initState() {
     super.initState();
-    products = FavoritePageExt.mock();
+    _vm = FavoritePageVm();
+    products = _vm.favoriteRepository.getProducts();
   }
 
   @override
@@ -137,18 +143,5 @@ class FavoritePageState extends State<FavoritePage> {
         ),
       ),
     );
-  }
-}
-
-extension FavoritePageExt on FavoritePage {
-  static List<Product> mock() {
-    final products = ProductGridItemExt.mock();
-
-    int randomCount() {
-      final rnd = Random();
-      return rnd.nextInt(products.length);
-    }
-
-    return products.getRange(0, randomCount()).toList();
   }
 }
